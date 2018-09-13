@@ -1,0 +1,25 @@
+
+Standard or Optional?
+
+Standard bedzie zainstalowany na kazdej workstacji :D
+Optional trzeba zainstalowac samemu...
+
+
+Układ katalogów, np:
+/opt/ibm/
+IBM has registered name on lanana (The Linux Assigned Names And Numbers Authority) 
+http://www.lanana.org/lsbreg/providers/providers.txt
+
+Ogólne zasady:
+
+/opt/<package>
+/etc/opt/<package>
+/var/opt/<package>
+
+/opt/<provider>/<package>
+
+
+
+
+
+
