@@ -67,19 +67,19 @@ sub ask_nice {
 }
 
 ###
+# setup default values
+###
+while ((my $key,my $value) = each(%options_default)){
+		$MYFILE{$key}=$value;
+}
+
+###
 # checking evnironment variables
 ###
 foreach my $option (@options_env) {
 	if (defined($ENV{$option})) {
 		$MYFILE{$option}=$ENV{$option};
 	}
-}
-
-###
-# setup default values
-###
-while ((my $key,my $value) = each(%options_default)){
-		$MYFILE{$key}=$value;
 }
 
 ###
