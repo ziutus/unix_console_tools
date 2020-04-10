@@ -6,6 +6,7 @@ use Data::Dumper;
 use Getopt::Long;
 use Cwd;
 
+my $filename='.create_package.conf';
 
 my $dirname=getcwd;
 my @dirs= split "/", $dirname;
@@ -27,8 +28,6 @@ $options_default{"SOFTWARE_RELEASE"}="1";
 $options_default{"SOFTWARE_DEPENDS"}="base-files";
 $options_default{"SOFTWARE_NAME"}=$dirname;
 
-
-
 my $RET1=undef;
 my %MYFILE;
 my @MYFILE;
@@ -41,11 +40,9 @@ sub ask_nice {
 	my $return;
 	my $return_read;
 
-	#print Dumper(@_);
-
 	($message, $return)  = @_;
 	
-	$return="" unless defined $return;
+	$return='' unless defined $return;
 	
 	print  "$message [$return]:";
 	$return_read=<STDIN>;
@@ -70,7 +67,7 @@ sub ask_nice {
 }
 
 ###
-#
+# checking evnironment variables
 ###
 foreach my $option (@options_env) {
 	if (defined($ENV{$option})) {
@@ -79,20 +76,17 @@ foreach my $option (@options_env) {
 }
 
 ###
-#
+# setup default values
 ###
-
-
 while ((my $key,my $value) = each(%options_default)){
 		$MYFILE{$key}=$value;
 }
 
-
 ###
 #	reading options from configuration file
 ###
-if ( -e ".create_package.conf") {
-	open FILE, ".create_package.conf";
+if ( -e $filename) {
+	open FILE, $filename;
 	my @MYFILE=<FILE>;
 	close FILE;
 	chomp @MYFILE;
@@ -109,23 +103,16 @@ if ( -e ".create_package.conf") {
 }
 
 ###
-#
-###
-#foreach my 
-
-
-###
 #	Asking for options with values readed from config file 
 ###
 foreach my $Option (@options) {
 	$OPTIONS{$Option} = ask_nice($Option,$MYFILE{$Option});	
 }
 
-
 ###	
 #   writting file config file to directory
 ###
-open FILE, ">.create_package.conf";
+open FILE, ">$filename";
 foreach my $Option (@options) {
 	print FILE "$Option=\"", $OPTIONS{$Option}, "\"\n";
 }
